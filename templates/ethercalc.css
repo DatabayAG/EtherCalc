@@ -1,0 +1,12 @@
+#ilEtherCalcPluginFullScreen{
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100%;
+    z-index: 888888;
+    background-color: white;
+}
+#ilEtherCalcPlugin, #ilEtherCalcPluginFullScreen{
+	border:none;
+}

@@ -1,0 +1,37 @@
+obj_xetc#:#Ethercalc
+objs_xetc#:#Ethercalcs
+obj_xetc_duplicate#:#Copy
+objs_xetc_duplicate#:#Copy Ethercalc
+obj_xetc_select#:#Select Ethercalc
+xetc_add#:#Add Ethercalc
+xetc_new#:#Add New Ethercalc
+xetc_read#:#Read access to Ethercalc
+xetc_write#:#Edit Ethercalc
+xetc_delete#:#Delete Ethercalc
+xetc_visible#:#Ethercalc is visible
+xetc_edit_permission#:#Change permission settings
+xetc_url#:#Url
+xetc_url_info#:#Url or IP to ethercalc server, for example http://ethercalc.ilias.de or http://127.0.0.1
+xetc_port#:#Port
+xetc_port_info#:#Port number for ethercalc server, default would be 8000 
+xetc_fullscreen#:#Fullscreen
+xetc_fullscreen_info#:#If activated Ethercalc Object start always in fullscreen mode. If deactivated the behavior can be configured in the objects.
+xetc_fullscreen_global_enabled#:#The Fullscreen mode is activate in the administration for all Ethercalc objects.
+crs_create_xetc#:#Create Ethercalc
+grp_create_xetc#:#Create Ethercalc
+fold_create_xetc#:#Create Ethercalc
+root_create_xetc#:#Create Ethercalc
+cat_create_xetc#:#Create Ethercalc
+content#:#Content
+properties#:#Properties
+edit_properties#:#Edit Properties
+title#:#Title
+description#:#Description
+save#:#Save
+cancel#:#Cancel
+edit#:#Edit
+status#:#Status
+offline#:#Offline
+example_plugin_configuration#:#Ethercalc Plugin Configuration
+page_id#:#Id
+saving_invoked#:#Save procedure has been executed. Please note that this Ethercalc does not save anything to DB.
