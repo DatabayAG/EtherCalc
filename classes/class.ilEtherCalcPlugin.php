@@ -17,7 +17,11 @@ class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
 
 	protected function uninstallCustom()
 	{
-		// TODO: Implement uninstallCustom() method.
+		/**
+		 * @var $ilDB ilDB
+		 */
+		global $ilDB;
+		$ilDB->query('DROP TABLE rep_robj_xetc_data');
 	}
 
 }
