@@ -25,4 +25,3 @@ class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
 	}
 
 }
-?>

@@ -240,4 +240,3 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
 	
 
 }
-?>

@@ -154,11 +154,11 @@ class ilEtherCalcConfig
 	}
 
 	/**
-	 * @param int $fullscreen
+	 * @param int $full_screen
 	 */
-	public function setFullScreen($fullscreen)
+	public function setFullScreen($full_screen)
 	{
-		$this->fullscreen = $fullscreen;
+		$this->fullscreen = $full_screen;
 	}
 
 

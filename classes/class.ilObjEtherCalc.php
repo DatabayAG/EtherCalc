@@ -237,12 +237,11 @@ class ilObjEtherCalc extends ilObjectPlugin
 	}
 
 	/**
-	 * @param int $fullscreen_for_object
+	 * @param int $full_screen_for_object
 	 */
-	public function setFullScreenForObject($fullscreen_for_object)
+	public function setFullScreenForObject($full_screen_for_object)
 	{
-		$this->fullscreen_for_object = $fullscreen_for_object;
+		$this->fullscreen_for_object = $full_screen_for_object;
 	}
 
 }
-?>

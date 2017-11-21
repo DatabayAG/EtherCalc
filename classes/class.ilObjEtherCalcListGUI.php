@@ -56,4 +56,3 @@ class ilObjEtherCalcListGUI extends ilObjectPluginListGUI
 		return $props;
 	}
 }
-?>

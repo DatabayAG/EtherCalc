@@ -140,4 +140,3 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 		$this->showConfigurationForm($form);
 	}
 }
-?>
