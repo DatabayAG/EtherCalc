@@ -9,7 +9,8 @@ $fields = array(
 	'is_online' => array(
 		'type' => 'integer',
 		'length' => 1,
-		'notnull' => false
+		'notnull' => true,
+		'default' => 0
 	)
 );
 

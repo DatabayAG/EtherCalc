@@ -36,7 +36,7 @@ class ilObjEtherCalc extends ilObjectPlugin
 	 * @var ilLog
 	 */
 	protected $log;
-	
+
 	/**
 	 * ilObjEtherCalc constructor.
 	 * @param int $a_ref_id
@@ -48,19 +48,19 @@ class ilObjEtherCalc extends ilObjectPlugin
 		$this->db = $ilDB;
 		$this->log = $ilLog;
 	}
-	
+
 
 	/**
-	* Get type.
-	*/
+	 * Get type.
+	 */
 	final function initType()
 	{
 		$this->setType('xetc');
 	}
-	
+
 	/**
-	* Create object
-	*/
+	 * Create object
+	 */
 	function doCreate()
 	{
 		$rand = $this->createRandomId();
@@ -90,7 +90,7 @@ class ilObjEtherCalc extends ilObjectPlugin
 		$this->round++;
 		if(function_exists('openssl_random_pseudo_bytes'))
 		{
-			$random_id = bin2hex(openssl_random_pseudo_bytes(50));
+			$random_id = bin2hex(openssl_random_pseudo_bytes(60));
 		}
 		else
 		{
@@ -106,13 +106,14 @@ class ilObjEtherCalc extends ilObjectPlugin
 	protected function checkIfRandomIdIsUnique($page_id)
 	{
 		$id = null;
+		$page_id = ilUtil::stripSlashes($page_id);
 
-		$set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = '.$this->db->quote($page_id, 'integer'));
+		$set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = '.$this->db->quote($page_id, 'text'));
 		while ($rec = $this->db->fetchAssoc($set))
 		{
 			$id = $rec['id'];
 		}
-		
+
 		if($id == null)
 		{
 			return $page_id;
@@ -129,8 +130,8 @@ class ilObjEtherCalc extends ilObjectPlugin
 	}
 
 	/**
-	* Read data from db
-	*/
+	 * Read data from db
+	 */
 	function doRead()
 	{
 		$res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(), 'integer'));
@@ -142,10 +143,10 @@ class ilObjEtherCalc extends ilObjectPlugin
 			break;
 		}
 	}
-	
+
 	/**
-	* Update data
-	*/
+	 * Update data
+	 */
 	function doUpdate()
 	{
 		$this->db->update(
@@ -161,7 +162,7 @@ class ilObjEtherCalc extends ilObjectPlugin
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function beforeDelete()
 	{
@@ -169,11 +170,11 @@ class ilObjEtherCalc extends ilObjectPlugin
 	}
 
 	/**
-	* Delete data from db
-	*/
+	 * Delete data from db
+	 */
 	function doDelete()
 	{
-		
+
 		parent::doDelete();
 		$this->deleteMetaData();
 	}
@@ -187,26 +188,26 @@ class ilObjEtherCalc extends ilObjectPlugin
 	{
 		//TODO: implment
 	}
-	
+
 //
 // Set/Get Methods for our example properties
 //
 
 	/**
-	* Set online
-	*
-	* @param	boolean		online
-	*/
+	 * Set online
+	 *
+	 * @param	boolean		online
+	 */
 	function setOnline($a_val)
 	{
 		$this->online = $a_val;
 	}
-	
+
 	/**
-	* Get online
-	*
-	* @return	boolean		online
-	*/
+	 * Get online
+	 *
+	 * @return	boolean		online
+	 */
 	function getOnline()
 	{
 		return $this->online;
@@ -237,11 +238,12 @@ class ilObjEtherCalc extends ilObjectPlugin
 	}
 
 	/**
-	 * @param int $full_screen_for_object
+	 * @param int $fullscreen_for_object
 	 */
-	public function setFullScreenForObject($full_screen_for_object)
+	public function setFullScreenForObject($fullscreen_for_object)
 	{
-		$this->fullscreen_for_object = $full_screen_for_object;
+		$this->fullscreen_for_object = $fullscreen_for_object;
 	}
 
 }
+?>

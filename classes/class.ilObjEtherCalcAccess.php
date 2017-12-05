@@ -42,20 +42,23 @@ class ilObjEtherCalcAccess extends ilObjectPluginAccess
 
 		return true;
 	}
-	
+
 	/**
-	* Check online status of example object
-	*/
+	 * @param $a_id
+	 * @return bool
+	 */
 	static function checkOnline($a_id)
 	{
 		/**
 		 * @var ilDB $ilDB
 		 */
 		global $ilDB;
-		
+
 		$set = $ilDB->query('SELECT is_online FROM rep_robj_xetc_data  WHERE id = '.$ilDB->quote($a_id, 'integer'));
 		$rec  = $ilDB->fetchAssoc($set);
 		return (boolean) $rec['is_online'];
 	}
-	
+
 }
+
+?>
