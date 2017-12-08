@@ -20,7 +20,7 @@ class ilObjEtherCalc extends ilObjectPlugin
 	/**
 	 * @var int
 	 */
-	protected $online;
+	protected $online = 0;
 
 	/**
 	 * @var int
