@@ -11,7 +11,7 @@ xetc_delete#:#Delete Ethercalc
 xetc_visible#:#Ethercalc is visible
 xetc_edit_permission#:#Change permission settings
 xetc_url#:#Url
-xetc_url_info#:#Url or IP to ethercalc server, for example http://ethercalc.ilias.de or http://127.0.0.1
+xetc_url_info#:#Url or IP to ethercalc server, for example http://ethercalc.ilias.de/cal, http://ethercalc.ilias.de:443/calc or http://127.0.0.1/calc
 xetc_port#:#Port
 xetc_port_info#:#Port number for ethercalc server, default would be 8000 
 xetc_fullscreen#:#Fullscreen
