@@ -16,11 +16,6 @@ class ilEtherCalcConfig
 	protected $settings;
 
 	/**
-	 * @var int
-	 */
-	protected $port;
-
-	/**
 	 * @var string
 	 */
 	protected $url;
@@ -60,17 +55,13 @@ class ilEtherCalcConfig
 	protected function read()
 	{
 		$url		= $this->settings->get('url');
-		$port		= $this->settings->get('port');
 		$fullscreen	= $this->settings->get('fullscreen');
 
 		if(strlen($url))
 		{
 			$this->setUrl($url);
 		}
-		if(strlen($port))
-		{
-			$this->setPort($port);
-		}
+
 		$this->setFullScreen($fullscreen);
 	}
 
@@ -96,7 +87,6 @@ class ilEtherCalcConfig
 	public function save()
 	{
 		$this->settings->set('url', $this->getUrl());
-		$this->settings->set('port', $this->getPort());
 		$this->settings->set('fullscreen', $this->getFullScreen());
 	}
 
@@ -111,22 +101,6 @@ class ilEtherCalcConfig
 		global $ilDB;
 
 		return $ilDB;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getPort()
-	{
-		return $this->port;
-	}
-
-	/**
-	 * @param int $port
-	 */
-	public function setPort($port)
-	{
-		$this->port = $port;
 	}
 
 	/**

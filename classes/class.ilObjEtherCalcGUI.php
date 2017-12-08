@@ -222,7 +222,6 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
 		$my_tpl = new ilTemplate('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/tpl.main.html', false, false);
 
 		$my_tpl->setVariable('URL', $this->config->getUrl());
-		$my_tpl->setVariable('PORT', $this->config->getPort());
 		$my_tpl->setVariable('PAGE_ID', $this->object->getPageId());
 
 		if($this->config->getFullScreen() || $this->object->getFullScreenForObject())

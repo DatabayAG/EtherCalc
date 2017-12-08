@@ -78,7 +78,6 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 			$form = $this->getConfigurationForm();
 			$form->setValuesByArray(array(
 				'url' => ilEtherCalcConfig::getInstance()->getUrl(),
-				'port' => ilEtherCalcConfig::getInstance()->getPort(),
 				'fullscreen' => ilEtherCalcConfig::getInstance()->getFullScreen()
 			));
 		}
@@ -101,11 +100,6 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 		$url->setInfo($this->getPluginObject()->txt('xetc_url_info'));
 		$form->addItem($url);
 
-		$port = new ilTextInputGUI($this->getPluginObject()->txt('xetc_port'), 'port');
-		$port->setValidationRegexp('/(\d)+/');
-		$port->setInfo($this->getPluginObject()->txt('xetc_port_info'));
-		$form->addItem($port);
-		
 		$fullscreen = new ilCheckboxInputGUI($this->getPluginObject()->txt('xetc_fullscreen'), 'fullscreen');
 		$fullscreen->setInfo($this->getPluginObject()->txt('xetc_fullscreen_info'));
 		$form->addItem($fullscreen);
@@ -125,7 +119,6 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 			try
 			{
 				ilEtherCalcConfig::getInstance()->setUrl($form->getInput('url'));
-				ilEtherCalcConfig::getInstance()->setPort($form->getInput('port'));
 				ilEtherCalcConfig::getInstance()->setFullScreen($form->getInput('fullscreen'));
 				ilEtherCalcConfig::getInstance()->save();
 				$this->ctrl->redirect($this, 'configure');
