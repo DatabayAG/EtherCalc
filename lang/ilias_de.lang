@@ -11,7 +11,7 @@ xetc_delete#:#Ethercalc löschen
 xetc_visible#:#Ethercalc ist sichtbar
 xetc_edit_permission#:#Berechtigungen editieren
 xetc_url#:#Url
-xetc_url_info#:#Url oder IP des Ethercalc Server, zum Beispiel http://ethercalc.ilias.de/cal, http://ethercalc.ilias.de:443/calc oder http://127.0.0.1/calc
+xetc_url_info#:#Url oder IP des Ethercalc Server, zum Beispiel http://ethercalc.ilias.de/calc, http://ethercalc.ilias.de:443/calc oder http://127.0.0.1/calc
 xetc_port#:#Port
 xetc_fullscreen#:#Vollbild
 xetc_fullscreen_info#:#Wenn diese Option aktiviert ist werden Ethercalc Objekte immer im Vollbild Modus gestartet, wenn diese Option deaktivert ist, läßt sich das gewünschte Verhalten im Objekt selbst einstellen. 
