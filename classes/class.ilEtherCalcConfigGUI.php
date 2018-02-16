@@ -1,7 +1,7 @@
 <?php
 
 require_once './Services/Component/classes/class.ilPluginConfigGUI.php';
-require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/ilEtherCalcConfig.php';
+require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/class.ilEtherCalcConfig.php';
 /**
  * Class ilEtherCalcConfigGUI
  */

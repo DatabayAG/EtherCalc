@@ -2,7 +2,7 @@
 
 require_once './Services/Repository/classes/class.ilObjectPluginGUI.php';
 require_once './Services/Form/classes/class.ilPropertyFormGUI.php';
-require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/ilEtherCalcConfig.php';
+require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/class.ilEtherCalcConfig.php';
 
 /**
 * @ilCtrl_isCalledBy ilObjEtherCalcGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
