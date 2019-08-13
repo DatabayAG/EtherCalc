@@ -1,140 +1,135 @@
-<?php
+<?php declare(strict_types=1);
 
 /**
  * Class ilEtherCalcConfig
  */
 class ilEtherCalcConfig
 {
-	/**
-	 * @var self
-	 */
-	private static $instance;
+    /**
+     * @var self
+     */
+    private static $instance;
 
-	/**
-	 * @var ilSetting
-	 */
-	protected $settings;
+    /**
+     * @var ilSetting
+     */
+    protected $settings;
 
-	/**
-	 * @var string
-	 */
-	protected $url;
+    /**
+     * @var string
+     */
+    protected $url;
 
-	/**
-	 * @var int
-	 */
-	protected $fullscreen;
+    /**
+     * @var int
+     */
+    protected $fullscreen;
 
-	/**
-	 * ilEtherCalcConfig constructor.
-	 */
-	private function __construct()
-	{
-		$this->settings = new ilSetting('ilethercalcplugin');
-		$this->read();
-	}
+    /**
+     * ilEtherCalcConfig constructor.
+     */
+    private function __construct()
+    {
+        $this->settings = new ilSetting('ilethercalcplugin');
+        $this->read();
+    }
 
-	/**
-	 * Get singleton instance
-	 *
-	 * @return self
-	 */
-	public static function getInstance()
-	{
-		if(null !== self::$instance)
-		{
-			return self::$instance;
-		}
+    /**
+     *
+     */
+    protected function read()
+    {
+        $url        = $this->settings->get('url');
+        $fullscreen = $this->settings->get('fullscreen');
 
-		return (self::$instance = new self());
-	}
+        if (strlen($url)) {
+            $this->setUrl($url);
+        }
 
-	/**
-	 *
-	 */
-	protected function read()
-	{
-		$url		= $this->settings->get('url');
-		$fullscreen	= $this->settings->get('fullscreen');
+        $this->setFullScreen($fullscreen);
+    }
 
-		if(strlen($url))
-		{
-			$this->setUrl($url);
-		}
+    /**
+     * Get singleton instance
+     * @return self
+     */
+    public static function getInstance()
+    {
+        if (null !== self::$instance) {
+            return self::$instance;
+        }
 
-		$this->setFullScreen($fullscreen);
-	}
+        return (self::$instance = new self());
+    }
 
-	/**
-	 * @return ilSetting
-	 */
-	public function getSettings()
-	{
-		return $this->settings;
-	}
+    /**
+     * @return ilSetting
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
 
-	/**
-	 * @param ilSetting $settings
-	 */
-	public function setSettings($settings)
-	{
-		$this->settings = $settings;
-	}
+    /**
+     * @param ilSetting $settings
+     */
+    public function setSettings($settings)
+    {
+        $this->settings = $settings;
+    }
 
-	/**
-	 *
-	 */
-	public function save()
-	{
-		$this->settings->set('url', $this->getUrl());
-		$this->settings->set('fullscreen', $this->getFullScreen());
-	}
+    /**
+     *
+     */
+    public function save()
+    {
+        $this->settings->set('url', $this->getUrl());
+        $this->settings->set('fullscreen', $this->getFullScreen());
+    }
 
-	/**
-	 * @return ilDB
-	 */
-	public function getDatabaseAdapter()
-	{
-		/**
-		 * @var $ilDB ilDB
-		 */
-		global $ilDB;
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
 
-		return $ilDB;
-	}
+    /**
+     * @param string $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getUrl()
-	{
-		return $this->url;
-	}
+    /**
+     * @return int
+     */
+    public function getFullScreen()
+    {
+        return $this->fullscreen;
+    }
 
-	/**
-	 * @param string $url
-	 */
-	public function setUrl($url)
-	{
-		$this->url = $url;
-	}
+    /**
+     * @param int $full_screen
+     */
+    public function setFullScreen($full_screen)
+    {
+        $this->fullscreen = $full_screen;
+    }
 
-	/**
-	 * @return int
-	 */
-	public function getFullScreen()
-	{
-		return $this->fullscreen;
-	}
+    /**
+     * @return ilDBInterface
+     */
+    public function getDatabaseAdapter()
+    {
+        /**
+         * @var $ilDB ilDBInterface
+         */
+        global $ilDB;
 
-	/**
-	 * @param int $full_screen
-	 */
-	public function setFullScreen($full_screen)
-	{
-		$this->fullscreen = $full_screen;
-	}
-
-
+        return $ilDB;
+    }
 
 }

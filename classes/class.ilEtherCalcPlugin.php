@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 require_once './Services/Repository/classes/class.ilRepositoryObjectPlugin.php';
 
@@ -7,21 +7,21 @@ require_once './Services/Repository/classes/class.ilRepositoryObjectPlugin.php';
  */
 class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
 {
-	/**
-	 * @return string
-	 */
-	function getPluginName()
-	{
-		return 'EtherCalc';
-	}
+    protected function uninstallCustom()
+    {
+        /**
+         * @var $ilDB ilDBInterface
+         */
+        global $ilDB;
+        $ilDB->query('DROP TABLE rep_robj_xetc_data');
+    }
 
-	protected function uninstallCustom()
-	{
-		/**
-		 * @var $ilDB ilDB
-		 */
-		global $ilDB;
-		$ilDB->query('DROP TABLE rep_robj_xetc_data');
-	}
+    /**
+     * @return string
+     */
+    function getPluginName()
+    {
+        return 'EtherCalc';
+    }
 
 }
