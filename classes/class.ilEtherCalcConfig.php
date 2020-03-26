@@ -83,7 +83,7 @@ class ilEtherCalcConfig
      */
     public function save()
     {
-        $this->settings->set('url', $this->getUrl());
+        $this->settings->set('url', rtrim($this->getUrl(), '/'));
         $this->settings->set('fullscreen', $this->getFullScreen());
     }
 
