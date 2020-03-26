@@ -42,7 +42,7 @@ class ilEtherCalcConfig
         $url        = $this->settings->get('url');
         $fullscreen = $this->settings->get('fullscreen');
 
-        if (strlen($url)) {
+        if (! is_bool($url) && strlen($url)) {
             $this->setUrl($url);
         }
 
