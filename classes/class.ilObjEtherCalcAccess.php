@@ -9,6 +9,22 @@ class ilObjEtherCalcAccess extends ilObjectPluginAccess
 {
 
     /**
+     * @param $a_id
+     * @return bool
+     */
+    static function checkOnline($a_id)
+    {
+        /**
+         * @var $ilDB ilDBInterface
+         */
+        global $ilDB;
+
+        $set = $ilDB->query('SELECT is_online FROM rep_robj_xetc_data  WHERE id = ' . $ilDB->quote($a_id, 'integer'));
+        $rec = $ilDB->fetchAssoc($set);
+        return (boolean) $rec['is_online'];
+    }
+
+    /**
      * @param string $a_cmd
      * @param string $a_permission
      * @param int    $a_ref_id
@@ -40,22 +56,4 @@ class ilObjEtherCalcAccess extends ilObjectPluginAccess
         return true;
     }
 
-    /**
-     * @param $a_id
-     * @return bool
-     */
-    static function checkOnline($a_id)
-    {
-	    /**
-	     * @var $ilDB ilDBInterface 
-	     */
-        global $ilDB;
-
-        $set = $ilDB->query('SELECT is_online FROM rep_robj_xetc_data  WHERE id = ' . $ilDB->quote($a_id, 'integer'));
-        $rec = $ilDB->fetchAssoc($set);
-        return (boolean) $rec['is_online'];
-    }
-
 }
-
-?>

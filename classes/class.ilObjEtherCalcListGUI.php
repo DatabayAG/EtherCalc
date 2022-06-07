@@ -31,14 +31,14 @@ class ilObjEtherCalcListGUI extends ilObjectPluginListGUI
         (
             array(
                 'permission' => 'read',
-                'cmd'        => 'showContent',
-                'default'    => true
+                'cmd' => 'showContent',
+                'default' => true
             ),
             array(
                 'permission' => 'write',
-                'cmd'        => 'editProperties',
-                'txt'        => $this->txt('edit'),
-                'default'    => false
+                'cmd' => 'editProperties',
+                'txt' => $this->txt('edit'),
+                'default' => false
             ),
         );
     }
@@ -52,9 +52,9 @@ class ilObjEtherCalcListGUI extends ilObjectPluginListGUI
         $props = array();
         if (!ilObjEtherCalcAccess::checkOnline($this->obj_id)) {
             $props[] = array(
-                'alert'    => true,
+                'alert' => true,
                 'property' => $this->txt('status'),
-                'value'    => $this->txt('offline')
+                'value' => $this->txt('offline')
             );
         }
 

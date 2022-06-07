@@ -49,9 +49,9 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
          */
         global $ilTabs, $ilCtrl, $ilAccess;
 
-        $this->tabs   = $ilTabs;
+        $this->tabs = $ilTabs;
         $this->access = $ilAccess;
-        $this->ctrl   = $ilCtrl;
+        $this->ctrl = $ilCtrl;
     }
 
     /**
@@ -118,7 +118,8 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->addInfoTab();
 
         if ($this->access->checkAccess('write', '', $this->object->getRefId())) {
-            $this->tabs->addTab('properties', $this->txt('properties'), $this->ctrl->getLinkTarget($this, 'editProperties'));
+            $this->tabs->addTab('properties', $this->txt('properties'),
+                $this->ctrl->getLinkTarget($this, 'editProperties'));
         }
 
         $this->addPermissionTab();
@@ -176,10 +177,10 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
      */
     function getPropertiesValues()
     {
-        $values['title']      = $this->object->getTitle();
-        $values['desc']       = $this->object->getDescription();
-        $values['page_id']    = $this->object->getPageId();
-        $values['online']     = $this->object->getOnline();
+        $values['title'] = $this->object->getTitle();
+        $values['desc'] = $this->object->getDescription();
+        $values['page_id'] = $this->object->getPageId();
+        $values['online'] = $this->object->getOnline();
         $values['fullscreen'] = $this->object->getFullScreenForObject();
         $this->form->setValuesByArray($values);
     }
@@ -212,7 +213,8 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->tpl->addJavaScript('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.js');
         $this->tpl->addCSS('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.css');
 
-        $my_tpl = new ilTemplate('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/tpl.main.html', false, false);
+        $my_tpl = new ilTemplate('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/tpl.main.html',
+            false, false);
 
         $my_tpl->setVariable('URL', $this->config->getUrl());
         $my_tpl->setVariable('PAGE_ID', $this->object->getPageId());

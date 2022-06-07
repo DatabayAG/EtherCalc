@@ -35,21 +35,6 @@ class ilEtherCalcConfig
     }
 
     /**
-     *
-     */
-    protected function read()
-    {
-        $url        = $this->settings->get('url');
-        $fullscreen = $this->settings->get('fullscreen');
-
-        if (! is_bool($url) && strlen($url)) {
-            $this->setUrl($url);
-        }
-
-        $this->setFullScreen($fullscreen);
-    }
-
-    /**
      * Get singleton instance
      * @return self
      */
@@ -60,6 +45,21 @@ class ilEtherCalcConfig
         }
 
         return (self::$instance = new self());
+    }
+
+    /**
+     *
+     */
+    protected function read()
+    {
+        $url = $this->settings->get('url');
+        $fullscreen = $this->settings->get('fullscreen');
+
+        if (!is_bool($url) && strlen($url)) {
+            $this->setUrl($url);
+        }
+
+        $this->setFullScreen($fullscreen);
     }
 
     /**

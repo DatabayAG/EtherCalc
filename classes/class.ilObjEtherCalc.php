@@ -28,7 +28,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     protected $fullscreen_for_object;
 
     /**
-     * @var ilDB
+     * @var
      */
     protected $db;
 
@@ -45,7 +45,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     {
         parent::__construct($a_ref_id);
         global $ilDB, $ilLog;
-        $this->db  = $ilDB;
+        $this->db = $ilDB;
         $this->log = $ilLog;
     }
 
@@ -64,14 +64,15 @@ class ilObjEtherCalc extends ilObjectPlugin
     {
         $rand = $this->createRandomId();
         if ($rand == false) {
-            $this->log->write(sprintf('Could not find a unique id for object (%s) object will be broken!', $this->getId()));
+            $this->log->write(sprintf('Could not find a unique id for object (%s) object will be broken!',
+                $this->getId()));
         } else {
             $this->db->insert(
                 'rep_robj_xetc_data',
                 array(
-                    'id'        => array('integer', $this->getId()),
+                    'id' => array('integer', $this->getId()),
                     'is_online' => array('integer', $this->getOnline()),
-                    'page_id'   => array('text', $rand)
+                    'page_id' => array('text', $rand)
                 )
             );
             $this->createMetaData();
@@ -98,10 +99,11 @@ class ilObjEtherCalc extends ilObjectPlugin
      */
     protected function checkIfRandomIdIsUnique($page_id)
     {
-        $id      = null;
+        $id = null;
         $page_id = ilUtil::stripSlashes($page_id);
 
-        $set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = ' . $this->db->quote($page_id, 'text'));
+        $set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = ' . $this->db->quote($page_id,
+                'text'));
         while ($rec = $this->db->fetchAssoc($set)) {
             $id = $rec['id'];
         }
@@ -109,7 +111,8 @@ class ilObjEtherCalc extends ilObjectPlugin
         if ($id == null) {
             return $page_id;
         } else {
-            $this->log->write(sprintf('The ethercalc page id (%s) for object with id (%s) already exists, trying another id', $page_id, $id));
+            $this->log->write(sprintf('The ethercalc page id (%s) for object with id (%s) already exists, trying another id',
+                $page_id, $id));
             if ($this->round < 10) {
                 $this->createRandomId();
             }
@@ -118,8 +121,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     }
 
     /**
-     * Get online
-     * @return    boolean        online
+     * @return int
      */
     function getOnline()
     {
@@ -140,7 +142,8 @@ class ilObjEtherCalc extends ilObjectPlugin
      */
     function doRead()
     {
-        $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(), 'integer'));
+        $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
+                'integer'));
         while ($row = $this->db->fetchAssoc($res)) {
             $this->setOnline((bool) $row['is_online']);
             $this->setPageId($row['page_id']);
@@ -157,7 +160,7 @@ class ilObjEtherCalc extends ilObjectPlugin
         $this->db->update(
             'rep_robj_xetc_data',
             array(
-                'is_online'  => array('integer', $this->getOnline()),
+                'is_online' => array('integer', $this->getOnline()),
                 'fullscreen' => array('integer', $this->getFullScreenForObject())
             ),
             array(
@@ -191,7 +194,8 @@ class ilObjEtherCalc extends ilObjectPlugin
      */
     public function beforeDelete()
     {
-        $this->db->manipulate('DELETE FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(), 'integer'));
+        $this->db->manipulate('DELETE FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
+                'integer'));
     }
 
     /**
@@ -215,7 +219,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getPageId()
     {
@@ -231,5 +235,3 @@ class ilObjEtherCalc extends ilObjectPlugin
     }
 
 }
-
-?>

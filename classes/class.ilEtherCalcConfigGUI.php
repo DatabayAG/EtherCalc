@@ -45,26 +45,9 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
          */
         global $lng, $tpl, $ilCtrl;
 
-        $this->lng  = $lng;
-        $this->tpl  = $tpl;
+        $this->lng = $lng;
+        $this->tpl = $tpl;
         $this->ctrl = $ilCtrl;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function performCommand($cmd)
-    {
-        switch ($cmd) {
-            case 'saveConfigurationForm':
-                $this->saveConfigurationForm();
-                break;
-
-            case 'showConfigurationForm':
-            default:
-                $this->showConfigurationForm();
-                break;
-        }
     }
 
     /**
@@ -114,7 +97,8 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
     }
 
     /**
-     * @param ilPropertyFormGUI $form
+     * @param ilPropertyFormGUI|null $form
+     * @return void
      */
     protected function showConfigurationForm(ilPropertyFormGUI $form = null)
     {
@@ -122,10 +106,28 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         if (!$form instanceof ilPropertyFormGUI) {
             $form = $this->getConfigurationForm();
             $form->setValuesByArray(array(
-                'url'        => ilEtherCalcConfig::getInstance()->getUrl(),
+                'url' => ilEtherCalcConfig::getInstance()->getUrl(),
                 'fullscreen' => ilEtherCalcConfig::getInstance()->getFullScreen()
             ));
         }
         $this->tpl->setContent($form->getHTML());
+    }
+
+    /**
+     * @param $cmd
+     * @return void
+     */
+    public function performCommand($cmd)
+    {
+        switch ($cmd) {
+            case 'saveConfigurationForm':
+                $this->saveConfigurationForm();
+                break;
+
+            case 'showConfigurationForm':
+            default:
+                $this->showConfigurationForm();
+                break;
+        }
     }
 }
