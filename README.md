@@ -1,5 +1,8 @@
 # ILIAS EtherCalc Plugin
-* For ILIAS versions: 5.1.0 - 7.999
+* For ILIAS versions: 8.0
+
+## Composer
+After the plugin files have been installed as described above, install dependencies via composer install.
 
 ## Installation Instructions
 1. Clone this repository to <ILIAS_DIRECTORY>/Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc
