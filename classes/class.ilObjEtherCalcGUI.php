@@ -1,7 +1,5 @@
 <?php declare(strict_types=1);
 
-require_once './Services/Repository/classes/class.ilObjectPluginGUI.php';
-require_once './Services/Form/classes/class.ilPropertyFormGUI.php';
 require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/class.ilEtherCalcConfig.php';
 
 /**
@@ -23,22 +21,22 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     /**
      * @var ilTabsGUI
      */
-    protected $tabs;
+    protected ilTabsGUI $tabs;
 
     /**
      * @var ilCtrl
      */
-    protected $ctrl;
+    protected ilCtrl $ctrl;
 
     /**
      * @var ilAccessHandler
      */
-    protected $access;
+    protected ilAccessHandler $access;
 
     /**
      * Initialisation
      */
-    protected function afterConstructor()
+    protected function afterConstructor(): void
     {
         $this->config = ilEtherCalcConfig::getInstance();
 
@@ -57,7 +55,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     /**
      * Get type.
      */
-    final function getType()
+    final function getType() : string
     {
         return 'xetc';
     }
@@ -66,7 +64,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
      * @param $cmd
      * @throws ilObjectException
      */
-    function performCommand($cmd)
+    public function performCommand(string $cmd): void
     {
         switch ($cmd) {
             case 'editProperties':        // list all commands that need write permission here
@@ -88,7 +86,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     /**
      * After object has been created -> jump to this command
      */
-    function getAfterCreationCmd()
+    public function getAfterCreationCmd(): string
     {
         return 'editProperties';
     }
@@ -96,7 +94,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     /**
      * Get standard command
      */
-    function getStandardCmd()
+    public function getStandardCmd(): string
     {
         return 'showContent';
     }
@@ -108,7 +106,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     /**
      * Set tabs
      */
-    function setTabs()
+    protected function setTabs(): void
     {
 
         if ($this->access->checkAccess('read', '', $this->object->getRefId())) {

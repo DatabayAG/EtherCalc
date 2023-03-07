@@ -117,7 +117,7 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
      * @param $cmd
      * @return void
      */
-    public function performCommand($cmd)
+    public function performCommand(string $cmd) : void
     {
         switch ($cmd) {
             case 'saveConfigurationForm':

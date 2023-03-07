@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-require_once './Services/Repository/classes/class.ilObjectPluginAccess.php';
 
 /**
  * Class ilObjEtherCalcAccess
@@ -32,7 +31,7 @@ class ilObjEtherCalcAccess extends ilObjectPluginAccess
      * @param string $a_user_id
      * @return bool
      */
-    function _checkAccess($a_cmd, $a_permission, $a_ref_id, $a_obj_id, $a_user_id = '')
+    public function _checkAccess(string $cmd, string $permission, int $ref_id, int $obj_id, ?int $user_id = null): bool
     {
         /**
          * @var ilObjUser       $ilUser
@@ -40,14 +39,14 @@ class ilObjEtherCalcAccess extends ilObjectPluginAccess
          */
         global $ilUser, $ilAccess;
 
-        if ($a_user_id == '') {
-            $a_user_id = $ilUser->getId();
+        if ($user_id == '') {
+            $user_id = $ilUser->getId();
         }
 
-        switch ($a_permission) {
+        switch ($permission) {
             case 'read':
-                if (!ilObjEtherCalcAccess::checkOnline($a_obj_id) &&
-                    !$ilAccess->checkAccessOfUser($a_user_id, 'write', '', $a_ref_id)) {
+                if (!ilObjEtherCalcAccess::checkOnline($obj_id) &&
+                    !$ilAccess->checkAccessOfUser($user_id, 'write', '', $ref_id)) {
                     return false;
                 }
                 break;

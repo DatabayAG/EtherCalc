@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-require_once './Services/Repository/classes/class.ilObjectPlugin.php';
 
 /**
  * Class ilObjEtherCalc
@@ -30,12 +29,12 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      * @var
      */
-    protected $db;
+    protected ilDBInterface $db;
 
     /**
      * @var ilLog
      */
-    protected $log;
+    protected ?ilLogger $log;
 
     /**
      * ilObjEtherCalc constructor.
@@ -52,7 +51,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      * Get type.
      */
-    final function initType()
+    final function initType() : void
     {
         $this->setType('xetc');
     }
@@ -60,7 +59,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      * Create object
      */
-    function doCreate()
+    protected function doCreate(bool $clone_mode = false): void
     {
         $rand = $this->createRandomId();
         if ($rand == false) {
@@ -140,7 +139,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      * Read data from db
      */
-    function doRead()
+    protected function doRead(): void
     {
         $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
                 'integer'));
@@ -155,7 +154,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      * Update data
      */
-    function doUpdate()
+    protected function doUpdate(): void
     {
         $this->db->update(
             'rep_robj_xetc_data',
@@ -192,16 +191,17 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      *
      */
-    public function beforeDelete()
+    protected function beforeDelete(): bool
     {
         $this->db->manipulate('DELETE FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
                 'integer'));
+        return true;
     }
 
     /**
      * Delete data from db
      */
-    function doDelete()
+    protected function doDelete(): void
     {
 
         parent::doDelete();

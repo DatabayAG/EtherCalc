@@ -1,6 +1,5 @@
 <?php declare(strict_types=1);
 
-require_once './Services/Repository/classes/class.ilObjectPluginListGUI.php';
 require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/class.ilObjEtherCalcAccess.php';
 
 /**
@@ -17,7 +16,7 @@ class ilObjEtherCalcListGUI extends ilObjectPluginListGUI
     /**
      * @return string
      */
-    function getGuiClass()
+    public function getGuiClass(): string
     {
         return 'ilObjEtherCalcGUI';
     }
@@ -25,7 +24,7 @@ class ilObjEtherCalcListGUI extends ilObjectPluginListGUI
     /**
      * @return array
      */
-    function initCommands()
+    public function initCommands(): array
     {
         return array
         (
@@ -44,10 +43,9 @@ class ilObjEtherCalcListGUI extends ilObjectPluginListGUI
     }
 
     /**
-     * @param string $a_item
      * @return array
      */
-    function getProperties($a_item = '')
+    public function getProperties() : array
     {
         $props = array();
         if (!ilObjEtherCalcAccess::checkOnline($this->obj_id)) {

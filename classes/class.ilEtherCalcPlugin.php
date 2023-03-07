@@ -1,13 +1,18 @@
 <?php declare(strict_types=1);
 
-require_once './Services/Repository/classes/class.ilRepositoryObjectPlugin.php';
 
 /**
  * Class ilEtherCalcPlugin
  */
 class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
 {
-    protected function uninstallCustom()
+    public function __construct()
+    {
+        global $DIC;
+        $this->db = $DIC->database();
+
+    }
+    protected function uninstallCustom() : void
     {
         /**
          * @var $ilDB ilDBInterface
@@ -19,7 +24,7 @@ class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
     /**
      * @return string
      */
-    function getPluginName()
+    function getPluginName() : string
     {
         return 'EtherCalc';
     }
