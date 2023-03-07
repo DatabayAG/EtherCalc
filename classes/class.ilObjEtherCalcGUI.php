@@ -67,6 +67,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     public function performCommand(string $cmd): void
     {
         switch ($cmd) {
+            case 'create':
             case 'editProperties':        // list all commands that need write permission here
             case 'updateProperties':
                 //case '...':
@@ -74,7 +75,8 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
                 $this->$cmd();
                 break;
 
-            case 'showContent':            // list all commands that need read permission here
+            case 'showContent':
+                // list all commands that need read permission here
                 //case '...':
                 //case '...':
                 $this->checkPermission('read');
@@ -195,7 +197,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
             $this->object->setOnline($this->form->getInput('online'));
             $this->object->setFullScreenForObject($this->form->getInput('fullscreen'));
             $this->object->update();
-            ilUtil::sendSuccess($this->lng->txt('msg_obj_modified'), true);
+            $this->tpl->setOnScreenMessage("success", $this->lng->txt("msg_obj_modified"), true);
             $this->ctrl->redirect($this, 'editProperties');
         }
 

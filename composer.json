@@ -1,0 +1,14 @@
+{
+    "require": {
+        "php": "^7.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ILIAS\\Plugin\\EtherCalc\\": "./classes"
+        },
+        "classmap": [
+            "./classes"
+        ],
+        "exclude-from-classmap": []
+    }
+}

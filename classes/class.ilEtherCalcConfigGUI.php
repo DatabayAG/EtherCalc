@@ -1,11 +1,24 @@
 <?php declare(strict_types=1);
+/******************************************************************************
+ *
+ * This file is part of ILIAS, a powerful learning management system.
+ *
+ * ILIAS is licensed with the GPL-3.0, you should have received a copy
+ * of said license along with the source code.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ *      https://www.ilias.de
+ *      https://github.com/ILIAS-eLearning
+ *
+ *****************************************************************************/
 
-require_once './Services/Component/classes/class.ilPluginConfigGUI.php';
-require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/class.ilEtherCalcConfig.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
- * Class ilEtherCalcConfigGUI
+ * @ilCtrl_IsCalledBy ilEtherCalcConfigGUI: ilObjComponentSettingsGUI
  */
+
 class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 {
     /**
@@ -38,16 +51,12 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
      */
     public function __construct()
     {
-        /**
-         * @var ilTemplate $tpl
-         * @var ilLanguage $lng
-         * @var ilCtrl     $ilCtrl
-         */
-        global $lng, $tpl, $ilCtrl;
 
-        $this->lng = $lng;
-        $this->tpl = $tpl;
-        $this->ctrl = $ilCtrl;
+        global $DIC;
+
+        $this->lng = $DIC->language();
+        $this->tpl = $DIC->ui()->mainTemplate();
+        $this->ctrl = $DIC->ctrl();
     }
 
     /**
@@ -63,7 +72,7 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
                 ilEtherCalcConfig::getInstance()->save();
                 $this->ctrl->redirect($this, 'configure');
             } catch (ilException $e) {
-                ilUtil::sendFailure($this->lng->txt('form_input_not_valid'));
+                $this->tpl->setOnScreenMessage("failure", $this->lng->txt("form_input_not_valid"), true);
             }
         }
 
@@ -76,8 +85,6 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
      */
     protected function getConfigurationForm()
     {
-        require_once 'Services/Form/classes/class.ilPropertyFormGUI.php';
-
         $form = new ilPropertyFormGUI();
         $form->setTitle($this->lng->txt('settings'));
         $form->setFormAction($this->ctrl->getFormAction($this, 'showConfigurationForm'));
