@@ -84,7 +84,7 @@ class ilEtherCalcConfig
     public function save()
     {
         $this->settings->set('url', rtrim($this->getUrl(), '/'));
-        $this->settings->set('fullscreen', $this->getFullScreen());
+        $this->settings->set('fullscreen', (string) $this->getFullScreen());
     }
 
     /**
@@ -127,9 +127,9 @@ class ilEtherCalcConfig
         /**
          * @var $ilDB ilDBInterface
          */
-        global $ilDB;
+        global $DIC;
 
-        return $ilDB;
+        return $DIC->database();
     }
 
 }
