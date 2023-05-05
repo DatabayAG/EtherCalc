@@ -1,21 +1,24 @@
 <#1>
 <?php
-$fields = array(
-	'id' => array(
-		'type' => 'integer',
-		'length' => 4,
-		'notnull' => true
-	),
-	'is_online' => array(
-		'type' => 'integer',
-		'length' => 1,
-		'notnull' => true,
-		'default' => 0
-	)
-);
+if(!$ilDB->tableExists('rep_robj_xetc_data'))
+{
+	$fields = array(
+		'id' => array(
+			'type' => 'integer',
+			'length' => 4,
+			'notnull' => true
+		),
+		'is_online' => array(
+			'type' => 'integer',
+			'length' => 1,
+			'notnull' => true,
+			'default' => 0
+		)
+	);
 
-$ilDB->createTable("rep_robj_xetc_data", $fields);
-$ilDB->addPrimaryKey("rep_robj_xetc_data", array("id"));
+	$ilDB->createTable("rep_robj_xetc_data", $fields);
+	$ilDB->addPrimaryKey("rep_robj_xetc_data", array("id"));
+}
 ?>
 <#2>
 <?php

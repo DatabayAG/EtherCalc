@@ -13,7 +13,6 @@
  *
  *****************************************************************************/
 
-require_once __DIR__ . '/../vendor/autoload.php';
 
 /**
  * @ilCtrl_IsCalledBy ilEtherCalcConfigGUI: ilObjComponentSettingsGUI
