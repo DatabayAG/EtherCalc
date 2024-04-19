@@ -27,7 +27,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     /**
      * @var ilObjEtherCalc|ilObject|null
      */
-    protected ?ilObject $object;
+    protected ?ilObject $object = null;
     protected ilEtherCalcConfig $config;
     protected ilPropertyFormGUI $form;
     protected ilTabsGUI $tabs;
