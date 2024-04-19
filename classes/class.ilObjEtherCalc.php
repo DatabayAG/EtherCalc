@@ -125,7 +125,7 @@ class ilObjEtherCalc extends ilObjectPlugin
         while ($row = $this->db->fetchAssoc($res)) {
             $this->setOnline((bool) $row['is_online']);
             $this->setPageId($row['page_id']);
-            $this->setFullScreenForObject($row['fullscreen']);
+            $this->setFullScreenForObject((int) $row['fullscreen']);
             break;
         }
     }
