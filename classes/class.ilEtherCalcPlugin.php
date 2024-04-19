@@ -18,39 +18,22 @@
 
 declare(strict_types=1);
 
-
-/**
- * Class ilEtherCalcPlugin
- */
 class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
 {
+    /** @var string */
     public const ID = "xetc";
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public const CTYPE = 'Services';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public const CNAME = 'Repository';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public const SLOT_ID = 'robj';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     public const PNAME = 'EtherCalc';
-
-
-    /**
-     * @return null
-     */
-
 
     public function getPluginName(): string
     {
@@ -58,11 +41,8 @@ class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
     }
     protected function uninstallCustom(): void
     {
-        /**
-         * @var $ilDB ilDBInterface
-         */
-        global $ilDB;
-        $ilDB->query('DROP TABLE rep_robj_xetc_data');
+        global $DIC;
+        $DIC->database()->query('DROP TABLE rep_robj_xetc_data');
     }
 
 }

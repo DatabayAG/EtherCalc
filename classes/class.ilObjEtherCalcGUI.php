@@ -26,15 +26,9 @@ require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/
  */
 class ilObjEtherCalcGUI extends ilObjectPluginGUI
 {
-    /**
-     * @var ilEtherCalcConfig $config
-     */
-    protected $config;
+    protected ilEtherCalcConfig $config;
 
-    /**
-     * @var ilPropertyFormGUI
-     */
-    protected $form;
+    protected ilPropertyFormGUI $form;
 
     protected ilTabsGUI $tabs;
 
@@ -42,9 +36,6 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
 
     protected ilAccessHandler $access;
 
-    /**
-     * Initialisation
-     */
     protected function afterConstructor(): void
     {
         $this->config = ilEtherCalcConfig::getInstance();
@@ -61,9 +52,6 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->ctrl = $ilCtrl;
     }
 
-    /**
-     * Get type.
-     */
     final public function getType(): string
     {
         return 'xetc';
@@ -93,29 +81,16 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         }
     }
 
-    /**
-     * After object has been created -> jump to this command
-     */
     public function getAfterCreationCmd(): string
     {
         return 'editProperties';
     }
 
-    /**
-     * Get standard command
-     */
     public function getStandardCmd(): string
     {
         return 'showContent';
     }
 
-    //
-    // DISPLAY TABS
-    //
-
-    /**
-     * Set tabs
-     */
     protected function setTabs(): void
     {
 
@@ -136,10 +111,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->addPermissionTab();
     }
 
-    /**
-     * Edit Properties. This commands uses the form class to display an input form.
-     */
-    public function editProperties()
+    public function editProperties(): void
     {
         global $tpl;
 
@@ -149,7 +121,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $tpl->setContent($this->form->getHTML());
     }
 
-    public function initPropertiesForm()
+    public function initPropertiesForm(): void
     {
         $this->form = new ilPropertyFormGUI();
 
@@ -180,10 +152,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->form->setFormAction($this->ctrl->getFormAction($this));
     }
 
-    /**
-     * Get values for edit properties form
-     */
-    public function getPropertiesValues()
+    public function getPropertiesValues(): void
     {
         $values['title'] = $this->object->getTitle();
         $values['desc'] = $this->object->getDescription();
@@ -193,10 +162,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->form->setValuesByArray($values);
     }
 
-    /**
-     * Update properties
-     */
-    public function updateProperties()
+    public function updateProperties(): void
     {
         $this->initPropertiesForm();
         if ($this->form->checkInput()) {
@@ -213,10 +179,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->tpl->setContent($this->form->getHtml());
     }
 
-    /**
-     * Show content
-     */
-    public function showContent()
+    public function showContent(): void
     {
         $this->tpl->addJavaScript('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.js');
         $this->tpl->addCSS('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.css');

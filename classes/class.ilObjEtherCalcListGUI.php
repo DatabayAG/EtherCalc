@@ -20,12 +20,9 @@ declare(strict_types=1);
 
 require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/class.ilObjEtherCalcAccess.php';
 
-/**
- * Class ilObjEtherCalcListGUI
- */
 class ilObjEtherCalcListGUI extends ilObjectPluginListGUI
 {
-    public function initType()
+    public function initType(): void
     {
         $this->setType('xetc');
     }

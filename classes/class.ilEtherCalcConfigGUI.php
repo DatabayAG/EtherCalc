@@ -21,33 +21,17 @@ declare(strict_types=1);
 /**
  * @ilCtrl_IsCalledBy ilEtherCalcConfigGUI: ilObjComponentSettingsGUI
  */
-
 class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 {
-    /**
-     * @var ilTemplate
-     */
-    protected $tpl;
+    protected ilGlobalTemplateInterface $tpl;
 
-    /**
-     * @var ilLanguage
-     */
-    protected $lng;
+    protected ilLanguage $lng;
 
-    /**
-     * @var ilCtrl
-     */
-    protected $ctrl;
+    protected ilCtrlInterface $ctrl;
 
-    /**
-     * @var ilToolbarGUI
-     */
-    protected $toolbar;
+    protected ilToolbarGUI $toolbar;
 
-    /**
-     * @var ilDBInterface
-     */
-    protected $db;
+    protected ilDBInterface $db;
 
     public function __construct()
     {
@@ -59,7 +43,7 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         $this->ctrl = $DIC->ctrl();
     }
 
-    protected function saveConfigurationForm()
+    protected function saveConfigurationForm(): void
     {
         $form = $this->getConfigurationForm();
         if ($form->checkInput()) {
@@ -77,10 +61,7 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         $this->showConfigurationForm($form);
     }
 
-    /**
-     * @return ilPropertyFormGUI
-     */
-    protected function getConfigurationForm()
+    protected function getConfigurationForm(): ilPropertyFormGUI
     {
         $form = new ilPropertyFormGUI();
         $form->setTitle($this->lng->txt('settings'));
@@ -100,10 +81,7 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         return $form;
     }
 
-    /**
-     * @return void
-     */
-    protected function showConfigurationForm(ilPropertyFormGUI $form = null)
+    protected function showConfigurationForm(ilPropertyFormGUI $form = null): void
     {
 
         if (!$form instanceof ilPropertyFormGUI) {

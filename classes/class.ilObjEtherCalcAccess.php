@@ -18,16 +18,9 @@
 
 declare(strict_types=1);
 
-
-/**
- * Class ilObjEtherCalcAccess
- */
 class ilObjEtherCalcAccess extends ilObjectPluginAccess
 {
-    /**
-     * @return bool
-     */
-    public static function checkOnline($a_id)
+    public static function checkOnline(int $a_id): bool
     {
         /**
          * @var $ilDB ilDBInterface

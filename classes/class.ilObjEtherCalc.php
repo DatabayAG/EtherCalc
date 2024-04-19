@@ -18,62 +18,33 @@
 
 declare(strict_types=1);
 
-
-/**
- * Class ilObjEtherCalc
- */
 class ilObjEtherCalc extends ilObjectPlugin
 {
-    /**
-     * @var string
-     */
-    protected $page_id;
+    protected string $page_id;
 
-    /**
-     * @var int
-     */
-    protected $round = 0;
+    protected int $round = 0;
 
-    /**
-     * @var int
-     */
-    protected $online = 0;
+    protected int $online = 0;
 
-    /**
-     * @var int
-     */
-    protected $fullscreen_for_object;
+    protected int $fullscreen_for_object;
 
     protected ilDBInterface $db;
 
-    /**
-     * @var ilLog
-     */
     protected ?ilLogger $log;
 
-    /**
-     * ilObjEtherCalc constructor.
-     * @param int $a_ref_id
-     */
-    public function __construct($a_ref_id = 0)
+    public function __construct(int $a_ref_id = 0)
     {
         parent::__construct($a_ref_id);
-        global $ilDB, $ilLog;
-        $this->db = $ilDB;
-        $this->log = $ilLog;
+        global $DIC;
+        $this->db = $DIC->database();
+        $this->log = $DIC->logger()->root();
     }
 
-    /**
-     * Get type.
-     */
     final public function initType(): void
     {
         $this->setType('xetc');
     }
 
-    /**
-     * Create object
-     */
     protected function doCreate(bool $clone_mode = false): void
     {
         $rand = $this->createRandomId();
@@ -95,10 +66,7 @@ class ilObjEtherCalc extends ilObjectPlugin
         }
     }
 
-    /**
-     * @return bool|string
-     */
-    protected function createRandomId()
+    protected function createRandomId(): bool|string
     {
         $this->round++;
         if (function_exists('openssl_random_pseudo_bytes')) {
@@ -109,10 +77,7 @@ class ilObjEtherCalc extends ilObjectPlugin
         return $this->checkIfRandomIdIsUnique($random_id);
     }
 
-    /**
-     * @return bool| string
-     */
-    protected function checkIfRandomIdIsUnique($page_id)
+    protected function checkIfRandomIdIsUnique($page_id): bool|string
     {
         $id = null;
         $page_id = ilUtil::stripSlashes($page_id);
@@ -140,26 +105,17 @@ class ilObjEtherCalc extends ilObjectPlugin
         return false;
     }
 
-    /**
-     * @return int
-     */
-    public function getOnline()
+    public function getOnline(): int
     {
         return $this->online;
     }
 
-    /**
-     * Set online
-     * @param boolean        online
-     */
-    public function setOnline($a_val)
+    public function setOnline(bool $a_val): void
     {
-        $this->online = $a_val;
+        $this->online = (int) $a_val;
     }
 
-    /**
-     * Read data from db
-     */
+
     protected function doRead(): void
     {
         $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote(
@@ -174,9 +130,6 @@ class ilObjEtherCalc extends ilObjectPlugin
         }
     }
 
-    /**
-     * Update data
-     */
     protected function doUpdate(): void
     {
         $this->db->update(
@@ -191,22 +144,12 @@ class ilObjEtherCalc extends ilObjectPlugin
         );
     }
 
-    /**
-     * @return int
-     */
-    public function getFullScreenForObject()
+    public function getFullScreenForObject(): int
     {
         return $this->fullscreen_for_object;
     }
 
-    //
-    // Set/Get Methods for our example properties
-    //
-
-    /**
-     * @param int $fullscreen_for_object
-     */
-    public function setFullScreenForObject($fullscreen_for_object)
+    public function setFullScreenForObject(int $fullscreen_for_object): void
     {
         $this->fullscreen_for_object = $fullscreen_for_object;
     }
@@ -220,9 +163,6 @@ class ilObjEtherCalc extends ilObjectPlugin
         return true;
     }
 
-    /**
-     * Delete data from db
-     */
     protected function doDelete(): void
     {
 
@@ -235,18 +175,12 @@ class ilObjEtherCalc extends ilObjectPlugin
         //TODO: implment
     }
 
-    /**
-     * @return string
-     */
-    public function getPageId()
+    public function getPageId(): string
     {
         return $this->page_id;
     }
 
-    /**
-     * @param mixed $page_id
-     */
-    public function setPageId($page_id)
+    public function setPageId(string $page_id): void
     {
         $this->page_id = $page_id;
     }
