@@ -22,32 +22,28 @@ class ilObjEtherCalcAccess extends ilObjectPluginAccess
 {
     public static function checkOnline(int $a_id): bool
     {
-        /**
-         * @var $ilDB ilDBInterface
-         */
-        global $ilDB;
+        global $DIC;
+        $db = $DIC->database();
 
-        $set = $ilDB->query('SELECT is_online FROM rep_robj_xetc_data  WHERE id = ' . $ilDB->quote($a_id, 'integer'));
-        $rec = $ilDB->fetchAssoc($set);
+        $set = $db->queryF(
+            'SELECT is_online FROM rep_robj_xetc_data  WHERE id = %s',
+            ['integer'],
+            [$a_id]
+        );
+        $rec = $db->fetchAssoc($set);
         return (bool) $rec['is_online'];
     }
 
     public function _checkAccess(string $cmd, string $permission, int $ref_id, int $obj_id, ?int $user_id = null): bool
     {
-        /**
-         * @var ilObjUser       $ilUser
-         * @var ilAccessHandler $ilAccess
-         */
-        global $ilUser, $ilAccess;
-
-        if ($user_id == '') {
-            $user_id = $ilUser->getId();
+        if (!$user_id) {
+            $user_id = $this->user->getId();
         }
 
         switch ($permission) {
             case 'read':
-                if (!ilObjEtherCalcAccess::checkOnline($obj_id) &&
-                    !$ilAccess->checkAccessOfUser($user_id, 'write', '', $ref_id)) {
+                if (!self::checkOnline($obj_id) &&
+                    !$this->access->checkAccessOfUser($user_id, 'write', '', $ref_id)) {
                     return false;
                 }
                 break;

@@ -26,30 +26,26 @@ require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/
  */
 class ilObjEtherCalcGUI extends ilObjectPluginGUI
 {
+    /**
+     * @var ilObjEtherCalc|ilObject|null
+     */
+    protected ?ilObject $object;
     protected ilEtherCalcConfig $config;
-
     protected ilPropertyFormGUI $form;
-
     protected ilTabsGUI $tabs;
-
     protected ilCtrl $ctrl;
-
     protected ilAccessHandler $access;
+    private ilGlobalTemplateInterface $mainTpl;
 
     protected function afterConstructor(): void
     {
+        global $DIC;
+        $this->tabs = $DIC->tabs();
+        $this->access = $DIC->access();
+        $this->ctrl = $DIC->ctrl();
+        $this->mainTpl = $DIC->ui()->mainTemplate();
+
         $this->config = ilEtherCalcConfig::getInstance();
-
-        /**
-         * @var ilTabsGUI       $ilTabs
-         * @var ilAccessHandler $ilAccess
-         * @var ilCtrl          $ilCtrl
-         */
-        global $ilTabs, $ilCtrl, $ilAccess;
-
-        $this->tabs = $ilTabs;
-        $this->access = $ilAccess;
-        $this->ctrl = $ilCtrl;
     }
 
     final public function getType(): string
@@ -113,12 +109,10 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
 
     public function editProperties(): void
     {
-        global $tpl;
-
         $this->tabs->activateTab('properties');
         $this->initPropertiesForm();
         $this->getPropertiesValues();
-        $tpl->setContent($this->form->getHTML());
+        $this->mainTpl->setContent($this->form->getHTML());
     }
 
     public function initPropertiesForm(): void
