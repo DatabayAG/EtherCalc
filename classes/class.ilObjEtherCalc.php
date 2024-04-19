@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 
 /**
@@ -26,9 +28,6 @@ class ilObjEtherCalc extends ilObjectPlugin
      */
     protected $fullscreen_for_object;
 
-    /**
-     * @var
-     */
     protected ilDBInterface $db;
 
     /**
@@ -40,7 +39,7 @@ class ilObjEtherCalc extends ilObjectPlugin
      * ilObjEtherCalc constructor.
      * @param int $a_ref_id
      */
-    function __construct($a_ref_id = 0)
+    public function __construct($a_ref_id = 0)
     {
         parent::__construct($a_ref_id);
         global $ilDB, $ilLog;
@@ -51,7 +50,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      * Get type.
      */
-    final function initType() : void
+    final public function initType(): void
     {
         $this->setType('xetc');
     }
@@ -63,16 +62,18 @@ class ilObjEtherCalc extends ilObjectPlugin
     {
         $rand = $this->createRandomId();
         if ($rand == false) {
-            $this->log->write(sprintf('Could not find a unique id for object (%s) object will be broken!',
-                $this->getId()));
+            $this->log->write(sprintf(
+                'Could not find a unique id for object (%s) object will be broken!',
+                $this->getId()
+            ));
         } else {
             $this->db->insert(
                 'rep_robj_xetc_data',
-                array(
-                    'id' => array('integer', $this->getId()),
-                    'is_online' => array('integer', $this->getOnline()),
-                    'page_id' => array('text', $rand)
-                )
+                [
+                    'id' => ['integer', $this->getId()],
+                    'is_online' => ['integer', $this->getOnline()],
+                    'page_id' => ['text', $rand]
+                ]
             );
             $this->createMetaData();
         }
@@ -93,7 +94,6 @@ class ilObjEtherCalc extends ilObjectPlugin
     }
 
     /**
-     * @param $page_id
      * @return bool| string
      */
     protected function checkIfRandomIdIsUnique($page_id)
@@ -101,8 +101,10 @@ class ilObjEtherCalc extends ilObjectPlugin
         $id = null;
         $page_id = ilUtil::stripSlashes($page_id);
 
-        $set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = ' . $this->db->quote($page_id,
-                'text'));
+        $set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = ' . $this->db->quote(
+            $page_id,
+            'text'
+        ));
         while ($rec = $this->db->fetchAssoc($set)) {
             $id = $rec['id'];
         }
@@ -110,8 +112,11 @@ class ilObjEtherCalc extends ilObjectPlugin
         if ($id == null) {
             return $page_id;
         } else {
-            $this->log->write(sprintf('The ethercalc page id (%s) for object with id (%s) already exists, trying another id',
-                $page_id, $id));
+            $this->log->write(sprintf(
+                'The ethercalc page id (%s) for object with id (%s) already exists, trying another id',
+                $page_id,
+                $id
+            ));
             if ($this->round < 10) {
                 $this->createRandomId();
             }
@@ -122,7 +127,7 @@ class ilObjEtherCalc extends ilObjectPlugin
     /**
      * @return int
      */
-    function getOnline()
+    public function getOnline()
     {
         return $this->online;
     }
@@ -131,7 +136,7 @@ class ilObjEtherCalc extends ilObjectPlugin
      * Set online
      * @param boolean        online
      */
-    function setOnline($a_val)
+    public function setOnline($a_val)
     {
         $this->online = $a_val;
     }
@@ -141,8 +146,10 @@ class ilObjEtherCalc extends ilObjectPlugin
      */
     protected function doRead(): void
     {
-        $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
-                'integer'));
+        $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote(
+            $this->getId(),
+            'integer'
+        ));
         while ($row = $this->db->fetchAssoc($res)) {
             $this->setOnline((bool) $row['is_online']);
             $this->setPageId($row['page_id']);
@@ -158,13 +165,13 @@ class ilObjEtherCalc extends ilObjectPlugin
     {
         $this->db->update(
             'rep_robj_xetc_data',
-            array(
-                'is_online' => array('integer', $this->getOnline()),
-                'fullscreen' => array('integer', $this->getFullScreenForObject())
-            ),
-            array(
-                'id' => array('integer', $this->getId())
-            )
+            [
+                'is_online' => ['integer', $this->getOnline()],
+                'fullscreen' => ['integer', $this->getFullScreenForObject()]
+            ],
+            [
+                'id' => ['integer', $this->getId()]
+            ]
         );
     }
 
@@ -176,9 +183,9 @@ class ilObjEtherCalc extends ilObjectPlugin
         return $this->fullscreen_for_object;
     }
 
-//
-// Set/Get Methods for our example properties
-//
+    //
+    // Set/Get Methods for our example properties
+    //
 
     /**
      * @param int $fullscreen_for_object
@@ -188,13 +195,12 @@ class ilObjEtherCalc extends ilObjectPlugin
         $this->fullscreen_for_object = $fullscreen_for_object;
     }
 
-    /**
-     *
-     */
     protected function beforeDelete(): bool
     {
-        $this->db->manipulate('DELETE FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
-                'integer'));
+        $this->db->manipulate('DELETE FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote(
+            $this->getId(),
+            'integer'
+        ));
         return true;
     }
 
@@ -208,12 +214,7 @@ class ilObjEtherCalc extends ilObjectPlugin
         $this->deleteMetaData();
     }
 
-    /**
-     * @param $a_target_id
-     * @param $a_copy_id
-     * @param $new_obj
-     */
-    function doClone($a_target_id, $a_copy_id, $new_obj)
+    public function doClone($a_target_id, $a_copy_id, $new_obj)
     {
         //TODO: implment
     }

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 /******************************************************************************
  *
  * This file is part of ILIAS, a powerful learning management system.
@@ -45,9 +47,6 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
      */
     protected $db;
 
-    /**
-     *
-     */
     public function __construct()
     {
 
@@ -58,9 +57,6 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         $this->ctrl = $DIC->ctrl();
     }
 
-    /**
-     *
-     */
     protected function saveConfigurationForm()
     {
         $form = $this->getConfigurationForm();
@@ -103,7 +99,6 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
     }
 
     /**
-     * @param ilPropertyFormGUI|null $form
      * @return void
      */
     protected function showConfigurationForm(ilPropertyFormGUI $form = null)
@@ -111,19 +106,15 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 
         if (!$form instanceof ilPropertyFormGUI) {
             $form = $this->getConfigurationForm();
-            $form->setValuesByArray(array(
+            $form->setValuesByArray([
                 'url' => ilEtherCalcConfig::getInstance()->getUrl(),
                 'fullscreen' => ilEtherCalcConfig::getInstance()->getFullScreen()
-            ));
+            ]);
         }
         $this->tpl->setContent($form->getHTML());
     }
 
-    /**
-     * @param $cmd
-     * @return void
-     */
-    public function performCommand(string $cmd) : void
+    public function performCommand(string $cmd): void
     {
         switch ($cmd) {
             case 'saveConfigurationForm':

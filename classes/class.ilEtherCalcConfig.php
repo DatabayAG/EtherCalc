@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Class ilEtherCalcConfig
@@ -47,9 +49,6 @@ class ilEtherCalcConfig
         return (self::$instance = new self());
     }
 
-    /**
-     *
-     */
     protected function read()
     {
         $url = $this->settings->get('url');
@@ -78,9 +77,6 @@ class ilEtherCalcConfig
         $this->settings = $settings;
     }
 
-    /**
-     *
-     */
     public function save()
     {
         $this->settings->set('url', rtrim($this->getUrl(), '/'));
