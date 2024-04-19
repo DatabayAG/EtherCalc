@@ -1,5 +1,6 @@
 <#1>
 <?php
+/** @var ilDBInterface $ilDB */
 if(!$ilDB->tableExists('rep_robj_xetc_data'))
 {
 	$fields = array(
