@@ -49,7 +49,7 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         if ($form->checkInput()) {
             try {
                 ilEtherCalcConfig::getInstance()->setUrl($form->getInput('url'));
-                ilEtherCalcConfig::getInstance()->setFullScreen($form->getInput('fullscreen'));
+                ilEtherCalcConfig::getInstance()->setFullScreen((int) $form->getInput('fullscreen'));
                 ilEtherCalcConfig::getInstance()->save();
                 $this->ctrl->redirect($this, 'configure');
             } catch (ilException $e) {

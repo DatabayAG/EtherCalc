@@ -161,7 +161,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
             $this->object->setTitle($this->form->getInput('title'));
             $this->object->setDescription($this->form->getInput('desc'));
             $this->object->setOnline($this->form->getInput('online'));
-            $this->object->setFullScreenForObject($this->form->getInput('fullscreen'));
+            $this->object->setFullScreenForObject((int) $this->form->getInput('fullscreen'));
             $this->object->update();
             $this->tpl->setOnScreenMessage("success", $this->lng->txt("msg_obj_modified"), true);
             $this->ctrl->redirect($this, 'editProperties');
