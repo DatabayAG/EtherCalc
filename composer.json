@@ -1,7 +1,8 @@
 {
-    "require": {
-        "php": "^7.4.0"
-    },
+    "name": "plugin/ether-calc",
+    "description": "An ILIAS RepositoryObject plugin",
+    "type": "project",
+    "license": "GPL",
     "autoload": {
         "psr-4": {
             "ILIAS\\Plugin\\EtherCalc\\": "./classes"
@@ -10,5 +11,16 @@
             "./classes"
         ],
         "exclude-from-classmap": []
+    },
+    "require": {
+        "php": ">=8.1 <8.3"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "friendsofphp/php-cs-fixer": "^3.54",
+        "captainhook/captainhook": "^5.23"
+    },
+    "config": {
+        "classmap-authoritative": true
     }
 }
