@@ -1,135 +1,89 @@
-<?php declare(strict_types=1);
+<?php
 
 /**
- * Class ilEtherCalcConfig
- */
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
 class ilEtherCalcConfig
 {
-    /**
-     * @var self
-     */
-    private static $instance;
+    private static ?self $instance = null;
 
-    /**
-     * @var ilSetting
-     */
-    protected $settings;
+    protected ilSetting $settings;
 
-    /**
-     * @var string
-     */
-    protected $url;
+    protected string $url = "";
 
-    /**
-     * @var int
-     */
-    protected $fullscreen;
+    protected int $fullscreen = 0;
 
-    /**
-     * ilEtherCalcConfig constructor.
-     */
     private function __construct()
     {
         $this->settings = new ilSetting('ilethercalcplugin');
         $this->read();
     }
 
-    /**
-     * Get singleton instance
-     * @return self
-     */
-    public static function getInstance()
+    public static function getInstance(): self
     {
-        if (null !== self::$instance) {
-            return self::$instance;
-        }
-
-        return (self::$instance = new self());
+        return self::$instance ?? (self::$instance = new self());
     }
 
-    /**
-     *
-     */
-    protected function read()
+    protected function read(): void
     {
         $url = $this->settings->get('url');
-        $fullscreen = $this->settings->get('fullscreen');
+        $fullscreen = (int) $this->settings->get('fullscreen', "0");
 
-        if (!is_null($url) && !is_bool($url) && strlen($url)) {
+        if (!is_null($url) && !is_bool($url) && $url !== '') {
             $this->setUrl($url);
         }
 
         $this->setFullScreen($fullscreen);
     }
 
-    /**
-     * @return ilSetting
-     */
-    public function getSettings()
+    public function getSettings(): ilSetting
     {
         return $this->settings;
     }
 
-    /**
-     * @param ilSetting $settings
-     */
-    public function setSettings($settings)
+    public function setSettings(ilSetting $settings): void
     {
         $this->settings = $settings;
     }
 
-    /**
-     *
-     */
-    public function save()
+    public function save(): void
     {
         $this->settings->set('url', rtrim($this->getUrl(), '/'));
         $this->settings->set('fullscreen', (string) $this->getFullScreen());
     }
 
-    /**
-     * @return string
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
+    public function setUrl(string $url): void
     {
         $this->url = $url;
     }
 
-    /**
-     * @return int
-     */
-    public function getFullScreen()
+    public function getFullScreen(): int
     {
         return $this->fullscreen;
     }
 
-    /**
-     * @param int $full_screen
-     */
-    public function setFullScreen($full_screen)
+    public function setFullScreen(int $full_screen): void
     {
         $this->fullscreen = $full_screen;
     }
-
-    /**
-     * @return ilDBInterface
-     */
-    public function getDatabaseAdapter()
-    {
-        /**
-         * @var $ilDB ilDBInterface
-         */
-        global $DIC;
-
-        return $DIC->database();
-    }
-
 }

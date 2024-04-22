@@ -1,53 +1,38 @@
-<?php declare(strict_types=1);
-/******************************************************************************
+<?php
+
+/**
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
  *
- * This file is part of ILIAS, a powerful learning management system.
- *
- * ILIAS is licensed with the GPL-3.0, you should have received a copy
- * of said license along with the source code.
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
  *
  * If this is not the case or you just want to try ILIAS, you'll find
  * us at:
- *      https://www.ilias.de
- *      https://github.com/ILIAS-eLearning
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
  *
- *****************************************************************************/
+ *********************************************************************/
 
+declare(strict_types=1);
 
 /**
  * @ilCtrl_IsCalledBy ilEtherCalcConfigGUI: ilObjComponentSettingsGUI
  */
-
 class ilEtherCalcConfigGUI extends ilPluginConfigGUI
 {
-    /**
-     * @var ilTemplate
-     */
-    protected $tpl;
+    protected ilGlobalTemplateInterface $tpl;
 
-    /**
-     * @var ilLanguage
-     */
-    protected $lng;
+    protected ilLanguage $lng;
 
-    /**
-     * @var ilCtrl
-     */
-    protected $ctrl;
+    protected ilCtrlInterface $ctrl;
 
-    /**
-     * @var ilToolbarGUI
-     */
-    protected $toolbar;
+    protected ilToolbarGUI $toolbar;
 
-    /**
-     * @var ilDBInterface
-     */
-    protected $db;
+    protected ilDBInterface $db;
 
-    /**
-     *
-     */
     public function __construct()
     {
 
@@ -58,16 +43,13 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         $this->ctrl = $DIC->ctrl();
     }
 
-    /**
-     *
-     */
-    protected function saveConfigurationForm()
+    protected function saveConfigurationForm(): void
     {
         $form = $this->getConfigurationForm();
         if ($form->checkInput()) {
             try {
                 ilEtherCalcConfig::getInstance()->setUrl($form->getInput('url'));
-                ilEtherCalcConfig::getInstance()->setFullScreen($form->getInput('fullscreen'));
+                ilEtherCalcConfig::getInstance()->setFullScreen((int) $form->getInput('fullscreen'));
                 ilEtherCalcConfig::getInstance()->save();
                 $this->ctrl->redirect($this, 'configure');
             } catch (ilException $e) {
@@ -79,10 +61,7 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         $this->showConfigurationForm($form);
     }
 
-    /**
-     * @return ilPropertyFormGUI
-     */
-    protected function getConfigurationForm()
+    protected function getConfigurationForm(): ilPropertyFormGUI
     {
         $form = new ilPropertyFormGUI();
         $form->setTitle($this->lng->txt('settings'));
@@ -102,28 +81,20 @@ class ilEtherCalcConfigGUI extends ilPluginConfigGUI
         return $form;
     }
 
-    /**
-     * @param ilPropertyFormGUI|null $form
-     * @return void
-     */
-    protected function showConfigurationForm(ilPropertyFormGUI $form = null)
+    protected function showConfigurationForm(ilPropertyFormGUI $form = null): void
     {
 
         if (!$form instanceof ilPropertyFormGUI) {
             $form = $this->getConfigurationForm();
-            $form->setValuesByArray(array(
+            $form->setValuesByArray([
                 'url' => ilEtherCalcConfig::getInstance()->getUrl(),
                 'fullscreen' => ilEtherCalcConfig::getInstance()->getFullScreen()
-            ));
+            ]);
         }
         $this->tpl->setContent($form->getHTML());
     }
 
-    /**
-     * @param $cmd
-     * @return void
-     */
-    public function performCommand(string $cmd) : void
+    public function performCommand(string $cmd): void
     {
         switch ($cmd) {
             case 'saveConfigurationForm':

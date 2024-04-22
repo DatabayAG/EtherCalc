@@ -1,54 +1,48 @@
-<?php declare(strict_types=1);
-
+<?php
 
 /**
- * Class ilEtherCalcPlugin
- */
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
 class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
 {
-
+    /** @var string */
     public const ID = "xetc";
 
-    /**
-     * @var string
-     */
-    const CTYPE = 'Services';
+    /** @var string */
+    public const CTYPE = 'Services';
 
-    /**
-     * @var string
-     */
-    const CNAME = 'Repository';
+    /** @var string */
+    public const CNAME = 'Repository';
 
-    /**
-     * @var string
-     */
-    const SLOT_ID = 'robj';
+    /** @var string */
+    public const SLOT_ID = 'robj';
 
-    /**
-     * @var string
-     */
-    const PNAME = 'EtherCalc';
+    /** @var string */
+    public const PNAME = 'EtherCalc';
 
-
-    /**
-     * @return null
-     */
-
-
-    /**
-     * @return string
-     */
-    public function getPluginName() : string
+    public function getPluginName(): string
     {
         return self::PNAME;
     }
-    protected function uninstallCustom() : void
+    protected function uninstallCustom(): void
     {
-        /**
-         * @var $ilDB ilDBInterface
-         */
-        global $ilDB;
-        $ilDB->query('DROP TABLE rep_robj_xetc_data');
+        global $DIC;
+        $DIC->database()->query('DROP TABLE rep_robj_xetc_data');
     }
 
 }

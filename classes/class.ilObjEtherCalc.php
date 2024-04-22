@@ -1,87 +1,72 @@
-<?php declare(strict_types=1);
-
+<?php
 
 /**
- * Class ilObjEtherCalc
- */
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
+
 class ilObjEtherCalc extends ilObjectPlugin
 {
-    /**
-     * @var string
-     */
-    protected $page_id;
+    protected string $page_id;
 
-    /**
-     * @var int
-     */
-    protected $round = 0;
+    protected int $round = 0;
 
-    /**
-     * @var int
-     */
-    protected $online = 0;
+    protected int $online = 0;
 
-    /**
-     * @var int
-     */
-    protected $fullscreen_for_object;
+    protected int $fullscreen_for_object;
 
-    /**
-     * @var
-     */
     protected ilDBInterface $db;
 
-    /**
-     * @var ilLog
-     */
     protected ?ilLogger $log;
 
-    /**
-     * ilObjEtherCalc constructor.
-     * @param int $a_ref_id
-     */
-    function __construct($a_ref_id = 0)
+    public function __construct(int $a_ref_id = 0)
     {
         parent::__construct($a_ref_id);
-        global $ilDB, $ilLog;
-        $this->db = $ilDB;
-        $this->log = $ilLog;
+        global $DIC;
+        $this->db = $DIC->database();
+        $this->log = $DIC->logger()->root();
     }
 
-    /**
-     * Get type.
-     */
-    final function initType() : void
+    final public function initType(): void
     {
         $this->setType('xetc');
     }
 
-    /**
-     * Create object
-     */
     protected function doCreate(bool $clone_mode = false): void
     {
         $rand = $this->createRandomId();
         if ($rand == false) {
-            $this->log->write(sprintf('Could not find a unique id for object (%s) object will be broken!',
-                $this->getId()));
+            $this->log->write(sprintf(
+                'Could not find a unique id for object (%s) object will be broken!',
+                $this->getId()
+            ));
         } else {
             $this->db->insert(
                 'rep_robj_xetc_data',
-                array(
-                    'id' => array('integer', $this->getId()),
-                    'is_online' => array('integer', $this->getOnline()),
-                    'page_id' => array('text', $rand)
-                )
+                [
+                    'id' => ['integer', $this->getId()],
+                    'is_online' => ['integer', $this->getOnline()],
+                    'page_id' => ['text', $rand]
+                ]
             );
             $this->createMetaData();
         }
     }
 
-    /**
-     * @return bool|string
-     */
-    protected function createRandomId()
+    protected function createRandomId(): bool|string
     {
         $this->round++;
         if (function_exists('openssl_random_pseudo_bytes')) {
@@ -92,17 +77,15 @@ class ilObjEtherCalc extends ilObjectPlugin
         return $this->checkIfRandomIdIsUnique($random_id);
     }
 
-    /**
-     * @param $page_id
-     * @return bool| string
-     */
-    protected function checkIfRandomIdIsUnique($page_id)
+    protected function checkIfRandomIdIsUnique($page_id): bool|string
     {
         $id = null;
         $page_id = ilUtil::stripSlashes($page_id);
 
-        $set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = ' . $this->db->quote($page_id,
-                'text'));
+        $set = $this->db->query('SELECT id FROM rep_robj_xetc_data WHERE page_id = ' . $this->db->quote(
+            $page_id,
+            'text'
+        ));
         while ($rec = $this->db->fetchAssoc($set)) {
             $id = $rec['id'];
         }
@@ -110,8 +93,11 @@ class ilObjEtherCalc extends ilObjectPlugin
         if ($id == null) {
             return $page_id;
         } else {
-            $this->log->write(sprintf('The ethercalc page id (%s) for object with id (%s) already exists, trying another id',
-                $page_id, $id));
+            $this->log->write(sprintf(
+                'The ethercalc page id (%s) for object with id (%s) already exists, trying another id',
+                $page_id,
+                $id
+            ));
             if ($this->round < 10) {
                 $this->createRandomId();
             }
@@ -119,88 +105,64 @@ class ilObjEtherCalc extends ilObjectPlugin
         return false;
     }
 
-    /**
-     * @return int
-     */
-    function getOnline()
+    public function getOnline(): int
     {
         return $this->online;
     }
 
-    /**
-     * Set online
-     * @param boolean        online
-     */
-    function setOnline($a_val)
+    public function setOnline(bool $a_val): void
     {
-        $this->online = $a_val;
+        $this->online = (int) $a_val;
     }
 
-    /**
-     * Read data from db
-     */
+
     protected function doRead(): void
     {
-        $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
-                'integer'));
+        $res = $this->db->query('SELECT * FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote(
+            $this->getId(),
+            'integer'
+        ));
         while ($row = $this->db->fetchAssoc($res)) {
             $this->setOnline((bool) $row['is_online']);
             $this->setPageId($row['page_id']);
-            $this->setFullScreenForObject($row['fullscreen']);
+            $this->setFullScreenForObject((int) $row['fullscreen']);
             break;
         }
     }
 
-    /**
-     * Update data
-     */
     protected function doUpdate(): void
     {
         $this->db->update(
             'rep_robj_xetc_data',
-            array(
-                'is_online' => array('integer', $this->getOnline()),
-                'fullscreen' => array('integer', $this->getFullScreenForObject())
-            ),
-            array(
-                'id' => array('integer', $this->getId())
-            )
+            [
+                'is_online' => ['integer', $this->getOnline()],
+                'fullscreen' => ['integer', $this->getFullScreenForObject()]
+            ],
+            [
+                'id' => ['integer', $this->getId()]
+            ]
         );
     }
 
-    /**
-     * @return int
-     */
-    public function getFullScreenForObject()
+    public function getFullScreenForObject(): int
     {
         return $this->fullscreen_for_object;
     }
 
-//
-// Set/Get Methods for our example properties
-//
-
-    /**
-     * @param int $fullscreen_for_object
-     */
-    public function setFullScreenForObject($fullscreen_for_object)
+    public function setFullScreenForObject(int $fullscreen_for_object): void
     {
         $this->fullscreen_for_object = $fullscreen_for_object;
     }
 
-    /**
-     *
-     */
     protected function beforeDelete(): bool
     {
-        $this->db->manipulate('DELETE FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote($this->getId(),
-                'integer'));
+        $this->db->manipulate('DELETE FROM rep_robj_xetc_data WHERE id = ' . $this->db->quote(
+            $this->getId(),
+            'integer'
+        ));
         return true;
     }
 
-    /**
-     * Delete data from db
-     */
     protected function doDelete(): void
     {
 
@@ -208,28 +170,17 @@ class ilObjEtherCalc extends ilObjectPlugin
         $this->deleteMetaData();
     }
 
-    /**
-     * @param $a_target_id
-     * @param $a_copy_id
-     * @param $new_obj
-     */
-    function doClone($a_target_id, $a_copy_id, $new_obj)
+    public function doClone($a_target_id, $a_copy_id, $new_obj)
     {
         //TODO: implment
     }
 
-    /**
-     * @return string
-     */
-    public function getPageId()
+    public function getPageId(): string
     {
         return $this->page_id;
     }
 
-    /**
-     * @param mixed $page_id
-     */
-    public function setPageId($page_id)
+    public function setPageId(string $page_id): void
     {
         $this->page_id = $page_id;
     }

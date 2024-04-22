@@ -1,6 +1,22 @@
-<?php declare(strict_types=1);
+<?php
 
-require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/classes/class.ilEtherCalcConfig.php';
+/**
+ * This file is part of ILIAS, a powerful learning management system
+ * published by ILIAS open source e-Learning e.V.
+ *
+ * ILIAS is licensed with the GPL-3.0,
+ * see https://www.gnu.org/licenses/gpl-3.0.en.html
+ * You should have received a copy of said license along with the
+ * source code, too.
+ *
+ * If this is not the case or you just want to try ILIAS, you'll find
+ * us at:
+ * https://www.ilias.de
+ * https://github.com/ILIAS-eLearning
+ *
+ *********************************************************************/
+
+declare(strict_types=1);
 
 /**
  * @ilCtrl_isCalledBy ilObjEtherCalcGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
@@ -9,59 +25,33 @@ require_once './Customizing/global/plugins/Services/Repository/RepositoryObject/
 class ilObjEtherCalcGUI extends ilObjectPluginGUI
 {
     /**
-     * @var ilEtherCalcConfig $config
+     * @var ilObjEtherCalc|ilObject|null
      */
-    protected $config;
-
-    /**
-     * @var ilPropertyFormGUI
-     */
-    protected $form;
-
-    /**
-     * @var ilTabsGUI
-     */
+    protected ?ilObject $object = null;
+    protected ilEtherCalcConfig $config;
+    protected ilPropertyFormGUI $form;
     protected ilTabsGUI $tabs;
-
-    /**
-     * @var ilCtrl
-     */
     protected ilCtrl $ctrl;
-
-    /**
-     * @var ilAccessHandler
-     */
     protected ilAccessHandler $access;
+    private ilGlobalTemplateInterface $mainTpl;
 
-    /**
-     * Initialisation
-     */
     protected function afterConstructor(): void
     {
+        global $DIC;
+        $this->tabs = $DIC->tabs();
+        $this->access = $DIC->access();
+        $this->ctrl = $DIC->ctrl();
+        $this->mainTpl = $DIC->ui()->mainTemplate();
+
         $this->config = ilEtherCalcConfig::getInstance();
-
-        /**
-         * @var ilTabsGUI       $ilTabs
-         * @var ilAccessHandler $ilAccess
-         * @var ilCtrl          $ilCtrl
-         */
-        global $ilTabs, $ilCtrl, $ilAccess;
-
-        $this->tabs = $ilTabs;
-        $this->access = $ilAccess;
-        $this->ctrl = $ilCtrl;
     }
 
-    /**
-     * Get type.
-     */
-    final function getType() : string
+    final public function getType(): string
     {
         return 'xetc';
     }
 
     /**
-     * @param $cmd
      * @throws ilObjectException
      */
     public function performCommand(string $cmd): void
@@ -85,29 +75,16 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         }
     }
 
-    /**
-     * After object has been created -> jump to this command
-     */
     public function getAfterCreationCmd(): string
     {
         return 'editProperties';
     }
 
-    /**
-     * Get standard command
-     */
     public function getStandardCmd(): string
     {
         return 'showContent';
     }
 
-//
-// DISPLAY TABS
-//
-
-    /**
-     * Set tabs
-     */
     protected function setTabs(): void
     {
 
@@ -118,30 +95,25 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->addInfoTab();
 
         if ($this->access->checkAccess('write', '', $this->object->getRefId())) {
-            $this->tabs->addTab('properties', $this->txt('properties'),
-                $this->ctrl->getLinkTarget($this, 'editProperties'));
+            $this->tabs->addTab(
+                'properties',
+                $this->txt('properties'),
+                $this->ctrl->getLinkTarget($this, 'editProperties')
+            );
         }
 
         $this->addPermissionTab();
     }
 
-    /**
-     * Edit Properties. This commands uses the form class to display an input form.
-     */
-    function editProperties()
+    public function editProperties(): void
     {
-        global $tpl;
-
         $this->tabs->activateTab('properties');
         $this->initPropertiesForm();
         $this->getPropertiesValues();
-        $tpl->setContent($this->form->getHTML());
+        $this->mainTpl->setContent($this->form->getHTML());
     }
 
-    /**
-     *
-     */
-    public function initPropertiesForm()
+    public function initPropertiesForm(): void
     {
         $this->form = new ilPropertyFormGUI();
 
@@ -172,10 +144,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->form->setFormAction($this->ctrl->getFormAction($this));
     }
 
-    /**
-     * Get values for edit properties form
-     */
-    function getPropertiesValues()
+    public function getPropertiesValues(): void
     {
         $values['title'] = $this->object->getTitle();
         $values['desc'] = $this->object->getDescription();
@@ -185,17 +154,14 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->form->setValuesByArray($values);
     }
 
-    /**
-     * Update properties
-     */
-    public function updateProperties()
+    public function updateProperties(): void
     {
         $this->initPropertiesForm();
         if ($this->form->checkInput()) {
             $this->object->setTitle($this->form->getInput('title'));
             $this->object->setDescription($this->form->getInput('desc'));
-            $this->object->setOnline($this->form->getInput('online'));
-            $this->object->setFullScreenForObject($this->form->getInput('fullscreen'));
+            $this->object->setOnline((bool) $this->form->getInput('online'));
+            $this->object->setFullScreenForObject((int) $this->form->getInput('fullscreen'));
             $this->object->update();
             $this->tpl->setOnScreenMessage("success", $this->lng->txt("msg_obj_modified"), true);
             $this->ctrl->redirect($this, 'editProperties');
@@ -205,16 +171,16 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->tpl->setContent($this->form->getHtml());
     }
 
-    /**
-     * Show content
-     */
-    function showContent()
+    public function showContent(): void
     {
         $this->tpl->addJavaScript('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.js');
         $this->tpl->addCSS('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.css');
 
-        $my_tpl = new ilTemplate('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/tpl.main.html',
-            false, false);
+        $my_tpl = new ilTemplate(
+            'Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/tpl.main.html',
+            false,
+            false
+        );
 
         $my_tpl->setVariable('URL', $this->config->getUrl());
         $my_tpl->setVariable('PAGE_ID', $this->object->getPageId());
