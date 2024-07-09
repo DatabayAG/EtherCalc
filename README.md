@@ -1,5 +1,5 @@
 # ILIAS EtherCalc Plugin
-* For ILIAS versions: 8.0
+* For ILIAS versions: 9.0
 
 ## Composer
 After the plugin files have been installed as described above, install dependencies via composer install.
