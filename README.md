@@ -12,4 +12,4 @@ After the plugin files have been installed as described above, install dependenc
 5. Choose **Configure** from the **Actions** drop down and enter the required data.
 
 ## EtherCalc Main View
-![Main View](https://databayag.github.io/EtherCalc/1.0.0/ethercalc.png)
+![Main View](https://databayag.github.io/EtherCalc/9.0.0/ethercalc_9.png)
