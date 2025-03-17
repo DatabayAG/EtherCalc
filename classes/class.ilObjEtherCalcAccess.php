@@ -31,7 +31,10 @@ class ilObjEtherCalcAccess extends ilObjectPluginAccess
             [$a_id]
         );
         $rec = $db->fetchAssoc($set);
-        return (bool) $rec['is_online'];
+        if(isset($rec['is_online'])) {
+            return (bool) $rec['is_online'];
+        }
+        return false;
     }
 
     public function _checkAccess(string $cmd, string $permission, int $ref_id, int $obj_id, ?int $user_id = null): bool
