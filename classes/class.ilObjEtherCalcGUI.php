@@ -173,14 +173,10 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
 
     public function showContent(): void
     {
-        $this->tpl->addJavaScript('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.js');
-        $this->tpl->addCSS('Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/ethercalc.css');
+        $this->tpl->addJavaScript($this->plugin->getAssetUrl('ethercalc.js'));
+        $this->tpl->addCSS($this->plugin->getAssetUrl('ethercalc.css'));
 
-        $my_tpl = new ilTemplate(
-            'Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/tpl.main.html',
-            false,
-            false
-        );
+        $my_tpl = new ilTemplate("tpl.main.html", true, true, $this->plugin->getDirectory());
 
         $my_tpl->setVariable('URL', $this->config->getUrl());
         $my_tpl->setVariable('PAGE_ID', $this->object->getPageId());

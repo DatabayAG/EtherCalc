@@ -86,4 +86,5 @@ class ilEtherCalcConfig
     {
         $this->fullscreen = $full_screen;
     }
+
 }

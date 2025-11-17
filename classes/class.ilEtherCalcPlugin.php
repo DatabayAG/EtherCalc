@@ -45,4 +45,20 @@ class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
         $DIC->database()->query('DROP TABLE rep_robj_xetc_data');
     }
 
+    public function getAssetURL(string $relative_path, bool $versioned = true) : string
+    {
+        $version_suffix = $versioned ? '?version=' . str_replace('.', '-', $this->getVersion()) : '';
+        $url =  $this->getDirectory() . '/templates/' . ltrim($relative_path, '/') . $version_suffix;
+        return $this->buildHttpUrl($url);
+    }
+
+    protected function buildHttpUrl(string $path): string {
+        $cleaned_url = explode("public", $path);
+        if(isset($cleaned_url[1])) {
+            $cleaned_url = $cleaned_url[1];
+        }
+       # $http_path = ilUtil::_getHttpPath();
+        return  $cleaned_url;
+    }
+
 }
