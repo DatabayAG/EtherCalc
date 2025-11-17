@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 /**
  * @ilCtrl_isCalledBy ilObjEtherCalcGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
- * @ilCtrl_Calls      ilObjEtherCalcGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI
+ * @ilCtrl_Calls      ilObjEtherCalcGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilLearningProgressGUI
  */
 class ilObjEtherCalcGUI extends ilObjectPluginGUI
 {
@@ -58,17 +58,13 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     {
         switch ($cmd) {
             case 'create':
-            case 'editProperties':        // list all commands that need write permission here
+            case 'editProperties':
             case 'updateProperties':
-                //case '...':
                 $this->checkPermission('write');
                 $this->$cmd();
                 break;
 
             case 'showContent':
-                // list all commands that need read permission here
-                //case '...':
-                //case '...':
                 $this->checkPermission('read');
                 $this->$cmd();
                 break;
