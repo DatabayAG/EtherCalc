@@ -1,0 +1,47 @@
+<style>
+    #ilEtherCalcPluginFullScreen{
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 888888;
+        background-color: white;
+    }
+    #ilEtherCalcPlugin, #ilEtherCalcPluginFullScreen{
+        border:none;
+    }
+</style>
+<script>
+  let Ethercalc = (function (scope) {
+    'use strict';
+
+    var pub = {}, pro = {};
+
+    pub.config = {
+      id				: 'ilEtherCalcPlugin',
+      dimension_class	: 'ilTabsContentOuter'
+    };
+
+    pub.setDimensions = function()
+    {
+      let iframe = document.getElementById(pub.config.id)
+      let outer = document.getElementsByClassName(pub.config.dimension_class)[0]
+      iframe.style.width = "100%";
+      iframe.style.height = "700px"
+    };
+
+    pub.protect = pro;
+    return pub;
+
+  }());
+
+
+
+  document.addEventListener('DOMContentLoaded', function () {
+    Ethercalc.setDimensions();
+  }, false);
+
+</script>
+
+<iframe id="{ETHERCALC_ID}" src="{URL}/{PAGE_ID}"></iframe>

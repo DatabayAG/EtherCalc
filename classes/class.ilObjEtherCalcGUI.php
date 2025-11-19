@@ -19,7 +19,7 @@
 declare(strict_types=1);
 
 /**
- * @ilCtrl_isCalledBy ilObjEtherCalcGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
+ * @ilCtrl_isCalledBy ilObjEtherCalcGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI, ilLMEditorGUI
  * @ilCtrl_Calls      ilObjEtherCalcGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilLearningProgressGUI
  */
 class ilObjEtherCalcGUI extends ilObjectPluginGUI
@@ -41,7 +41,6 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->tabs = $DIC->tabs();
         $this->access = $DIC->access();
         $this->ctrl = $DIC->ctrl();
-        $this->mainTpl = $DIC->ui()->mainTemplate();
 
         $this->config = ilEtherCalcConfig::getInstance();
     }
@@ -56,6 +55,8 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
      */
     public function performCommand(string $cmd): void
     {
+        global $DIC;
+        $DIC->globalScreen()->tool()->context()->claim()->repository();
         switch ($cmd) {
             case 'create':
             case 'editProperties':
@@ -106,7 +107,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
         $this->tabs->activateTab('properties');
         $this->initPropertiesForm();
         $this->getPropertiesValues();
-        $this->mainTpl->setContent($this->form->getHTML());
+        $this->tpl->setContent($this->form->getHTML());
     }
 
     public function initPropertiesForm(): void
@@ -169,10 +170,7 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
 
     public function showContent(): void
     {
-        $this->tpl->addJavaScript($this->plugin->getAssetUrl('ethercalc.js'));
-        $this->tpl->addCSS($this->plugin->getAssetUrl('ethercalc.css'));
-
-        $my_tpl = new ilTemplate("tpl.main.html", true, true, $this->plugin->getDirectory());
+        $my_tpl = new ilTemplate("tpl.exp.html", true, true, $this->plugin->getDirectory());
 
         $my_tpl->setVariable('URL', $this->config->getUrl());
         $my_tpl->setVariable('PAGE_ID', $this->object->getPageId());
@@ -181,9 +179,9 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
             $my_tpl->setVariable('ETHERCALC_ID', 'ilEtherCalcPluginFullScreen');
         } else {
             $my_tpl->setVariable('ETHERCALC_ID', 'ilEtherCalcPlugin');
-            $this->tabs->activateTab('content');
         }
 
+        $this->tabs->activateTab('content');
         $this->tpl->setContent($my_tpl->get());
     }
 
