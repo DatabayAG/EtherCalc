@@ -77,7 +77,7 @@ class ilObjEtherCalc extends ilObjectPlugin
         return $this->checkIfRandomIdIsUnique($random_id);
     }
 
-    protected function checkIfRandomIdIsUnique($page_id): bool|string
+    protected function checkIfRandomIdIsUnique(string $page_id): bool|string
     {
         $id = null;
         $page_id = ilUtil::stripSlashes($page_id);
@@ -170,9 +170,8 @@ class ilObjEtherCalc extends ilObjectPlugin
         $this->deleteMetaData();
     }
 
-    public function doClone($a_target_id, $a_copy_id, $new_obj)
+    protected function doCloneObject(ilObject2 $new_obj, int $a_target_id, ?int $a_copy_id = null): void
     {
-        //TODO: implment
     }
 
     public function getPageId(): string

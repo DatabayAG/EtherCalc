@@ -33,7 +33,6 @@ class ilObjEtherCalcGUI extends ilObjectPluginGUI
     protected ilTabsGUI $tabs;
     protected ilCtrl $ctrl;
     protected ilAccessHandler $access;
-    private ilGlobalTemplateInterface $mainTpl;
 
     protected function afterConstructor(): void
     {
