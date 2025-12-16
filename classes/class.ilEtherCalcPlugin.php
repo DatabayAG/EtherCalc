@@ -62,4 +62,8 @@ class ilEtherCalcPlugin extends ilRepositoryObjectPlugin
         return  $cleaned_url;
     }
 
+    public static function _getIcon(string $a_type) : string
+    {
+        return './Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc/templates/images/icon_xetc.svg';
+    }
 }
