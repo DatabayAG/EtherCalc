@@ -44,7 +44,7 @@ class ilEtherCalcConfig
         $url = $this->settings->get('url');
         $fullscreen = (int) $this->settings->get('fullscreen', "0");
 
-        if (!is_null($url) && !is_bool($url) && $url !== '') {
+        if (!is_null($url) && $url !== '') {
             $this->setUrl($url);
         }
 
