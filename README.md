@@ -2,7 +2,7 @@
 * For ILIAS versions: 10.0
 
 ## Composer
-After the plugin files have been installed as described above, install dependencies via composer install.
+After the plugin files have been installed as described bellow, ensure to run composer install in your ILIAS root folder.
 
 ## Installation Instructions
 1. Clone this repository to <ILIAS_DIRECTORY>/public/Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc
