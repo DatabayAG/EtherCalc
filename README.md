@@ -5,7 +5,7 @@
 After the plugin files have been installed as described above, install dependencies via composer install.
 
 ## Installation Instructions
-1. Clone this repository to <ILIAS_DIRECTORY>/Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc
+1. Clone this repository to <ILIAS_DIRECTORY>/public/Customizing/global/plugins/Services/Repository/RepositoryObject/EtherCalc
 2. Login to ILIAS with an administrator account (e.g. root)
 3. Select **Plugins** from the **Administration** main menu drop down.
 4. Search the **EtherCalc** plugin in the list of plugin and choose **Activate** from the **Actions** drop down.
